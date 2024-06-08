@@ -40,6 +40,8 @@ database (`doctrine:database:drop --force`) and try again.
 ```
 php bin/console server:run
 ```
+User : ron_furgandy  
+Pass : pumpup
 
 ### Start
 Install jquery  
