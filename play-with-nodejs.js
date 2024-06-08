@@ -2,7 +2,7 @@
 // node play-with-nodejs.js
 
 // Will cause error if you use let (which is great)
-console.log(aNumberLet);
+// console.log(aNumberLet);
 
 // Will not cause an error due to variable hoisting
 console.log(aNumber);
@@ -29,3 +29,15 @@ setTimeout(() => {
 }, 2000);
 
 console.log('Waiting for the timeout function to execute (2sec).')
+
+
+// ######################  CONST ######################
+const name = 'Bogdan';
+// This next line will cause an error becaise we can't reassign a const variable
+// name = 'Alex';
+
+// But we can edit an object
+const person = {hasName : true}
+person.hasName = false
+console.log(person);
+
