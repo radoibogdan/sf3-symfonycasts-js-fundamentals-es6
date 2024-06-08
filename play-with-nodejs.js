@@ -3,6 +3,20 @@
 
 var aNumber = 10;
 
+if (true) {
+    (() => {
+        // Will log 10 in setTimeout because aNumber has scope only inside the arrow function
+        var aNumber = 42;
+    })();
+}
+
+if (true) {
+    // Overides the initial aNumber
+    // var aNumber = 50
+    // Does not overide the initial aNumber, let is block scope
+    // let aNumber = 50;
+}
+
 setTimeout(() => {
     console.log(aNumber);
 }, 2000);
