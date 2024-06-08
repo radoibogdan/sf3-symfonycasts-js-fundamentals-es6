@@ -1,6 +1,13 @@
 // execute this file using cmd
 // node play-with-nodejs.js
 
+// Will cause error if you use let (which is great)
+console.log(aNumberLet);
+
+// Will not cause an error due to variable hoisting
+console.log(aNumber);
+
+let aNumberLet = 100;
 var aNumber = 10;
 
 if (true) {
