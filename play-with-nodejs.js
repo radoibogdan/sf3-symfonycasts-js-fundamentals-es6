@@ -95,8 +95,13 @@ let copyUsingSpread = [...greatThings];
 copyUsingSpread.push('carnavals');
 console.log(greatThings, copyUsingSpread);
 
+// ###################### Template strings ######################
+const food = 'burgers';
+const oldPhrase = 'The year is ' +  new Date().getFullYear() + ' and I love ' + food +'.';
+const newPhrase = `The year is ${new Date().getFullYear()} and I love ${food}.`
+console.log(newPhrase);
 
-
+// Line breaks
 
 
 
