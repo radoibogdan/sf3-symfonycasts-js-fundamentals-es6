@@ -70,3 +70,33 @@ console.log(bogdan.returnCharacteristics());
 
 const employee = new Developer(22, 'flies in the sky');
 console.log(employee.returnCharacteristics());
+
+
+// ######################  Spread operator ######################
+
+let printThreeThings = function(thing1, thing2, thing3) {
+    console.log(thing1, thing2, thing3);
+}
+let yummyThings = ['pizza', 'gelato', 'sushi'];
+
+printThreeThings(...yummyThings);
+
+// Merging using spread operator
+let greatThings = ['swimming', 'sunsets', ...yummyThings, 'Paris']
+console.log("Merging using spread operator", greatThings);
+
+// Copy by reference, the initial array is mutated (summer is added to the initial array)
+let copyByReference = greatThings;
+copyByReference.push('summer');
+console.log(greatThings, copyByReference);
+
+// Copy using spread operator, the initial array is NOT mutated
+let copyUsingSpread = [...greatThings];
+copyUsingSpread.push('carnavals');
+console.log(greatThings, copyUsingSpread);
+
+
+
+
+
+
