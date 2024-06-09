@@ -166,6 +166,10 @@
         }
 
         _addRow(repLog) {
+            /*DESTRUCTURING*/
+            let {id, itemLabel, reps, madeUpKey = 'defaultKey'} = repLog;
+            console.log(id, itemLabel, reps, madeUpKey);
+
             const tplText = $('#js-rep-log-row-template').html();
             const tpl = _.template(tplText);
 
