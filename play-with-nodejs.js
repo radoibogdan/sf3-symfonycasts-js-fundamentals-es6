@@ -41,3 +41,32 @@ const person = {hasName : true}
 person.hasName = false
 console.log(person);
 
+// ######################  CLASS SYNTAX ######################
+// ######################  INHERITANCE ######################
+class Person {
+    constructor(age) {
+        this.age = age;
+    }
+
+    returnCharacteristics() {
+        return this.age;
+    }
+}
+
+class Developer extends Person {
+    constructor(age, ability) {
+        super(age);
+        this.ability = ability;
+    }
+    // Overide inherited class
+    returnCharacteristics() {
+        let age = super.returnCharacteristics();
+        return [age, this.ability];
+    }
+}
+
+const bogdan = new Person(35);
+console.log(bogdan.returnCharacteristics());
+
+const employee = new Developer(22, 'flies in the sky');
+console.log(employee.returnCharacteristics());
