@@ -20,13 +20,14 @@
             );
             this.$wrapper.on(
                 'submit',
-                this._selectors.newRepForm,
+                RepLogApp._selectors.newRepForm,
                 this.handleNewFormSubmit.bind(this)
             );
         }
 
         /* Classes can have properties using the set / get ES6 syntax OR you can also define them in the constructor */
-        get _selectors() {
+        /* This property can be static because we are not using "this" inside it */
+        static get _selectors() {
             return {
                 newRepForm: '.js-new-rep-log-form'
             }
@@ -133,7 +134,7 @@
 
         _mapErrorsToForm(errorData) {
             this._removeFormErrors();
-            const $form = this.$wrapper.find(this._selectors.newRepForm);
+            const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
 
             // $(this) refers to the object now, we must replace with $(element)
             $form.find(':input').each((index, element) => {
@@ -152,7 +153,7 @@
         }
 
         _removeFormErrors() {
-            const $form = this.$wrapper.find(this._selectors.newRepForm);
+            const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
             $form.find('.js-field-error').remove();
             $form.find('.form-group').removeClass('has-error');
         }
@@ -160,7 +161,7 @@
         _clearForm() {
             this._removeFormErrors();
 
-            const $form = this.$wrapper.find(this._selectors.newRepForm);
+            const $form = this.$wrapper.find(RepLogApp._selectors.newRepForm);
             $form[0].reset();
         }
 
@@ -181,12 +182,10 @@
         }
 
         calculateTotalWeight() {
-            let totalWeight = 0;
-            this.$wrapper.find('tbody tr').each((index, element) => {
-                totalWeight += $(element).data('weight');
-            });
-
-            return totalWeight;
+            /* Using static method */
+            return Helper._calculateWeight(
+                this.$wrapper.find('tbody tr')
+            );
         }
         // Default value !!!
         getTotalWeightString(maxWeight = 500) {
@@ -195,6 +194,15 @@
                 weight = maxWeight + '+'
             }
             return weight + ' kg'
+        }
+        /* Create static method*/
+        static _calculateWeight($elements) {
+            let totalWeight = 0;
+            $elements.each((index, element) => {
+                totalWeight += $(element).data('weight');
+            });
+
+            return totalWeight;
         }
     }
 
