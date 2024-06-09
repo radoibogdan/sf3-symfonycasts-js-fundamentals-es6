@@ -1,41 +1,37 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
-    window.RepLogApp = function ($wrapper) {
-        this.$wrapper = $wrapper;
-        this.helper = new Helper(this.$wrapper);
+    class RepLogApp {
+        constructor($wrapper) {
+            this.$wrapper = $wrapper;
+            this.helper = new Helper(this.$wrapper);
 
-        this.loadRepLogs();
+            this.loadRepLogs();
 
-        this.$wrapper.on(
-            'click',
-            '.js-delete-rep-log',
-            this.handleRepLogDelete.bind(this)
-        );
-        this.$wrapper.on(
-            'click',
-            'tbody tr',
-            this.handleRowClick.bind(this)
-        );
-        this.$wrapper.on(
-            'submit',
-            this._selectors.newRepForm,
-            this.handleNewFormSubmit.bind(this)
-        );
-    };
+            this.$wrapper.on(
+                'click',
+                '.js-delete-rep-log',
+                this.handleRepLogDelete.bind(this)
+            );
+            this.$wrapper.on(
+                'click',
+                'tbody tr',
+                this.handleRowClick.bind(this)
+            );
+            this.$wrapper.on(
+                'submit',
+                this._selectors.newRepForm,
+                this.handleNewFormSubmit.bind(this)
+            );
+        }
 
-    $.extend(window.RepLogApp.prototype, {
-        _selectors: {
-            newRepForm: '.js-new-rep-log-form'
-        },
+        /* Classes can have properties using the set / get ES6 syntax OR you can also define them in the constructor */
+        get _selectors() {
+            return {
+                newRepForm: '.js-new-rep-log-form'
+            }
+        }
 
-        // New short syntax
-        fakeMethod: function () {
-
-        },
-        fakeMethodShortened() {
-
-        },
         loadRepLogs() {
             $.ajax({
                 url: Routing.generate('rep_log_list'),
@@ -45,13 +41,13 @@
                     this._addRow(repLog);
                 });
             })
-        },
+        }
 
         updateTotalWeightLifted() {
             this.$wrapper.find('.js-total-weight').html(
                 this.helper.getTotalWeightString()
             );
-        },
+        }
 
         handleRepLogDelete (e) {
             e.preventDefault();
@@ -69,7 +65,7 @@
             }).catch((arg) => {
                 // canceling is cool!
             });
-        },
+        }
 
         _deleteRepLog($link) {
             $link.addClass('text-danger');
@@ -90,11 +86,11 @@
                     this.updateTotalWeightLifted();
                 });
             })
-        },
+        }
 
         handleRowClick () {
             console.log('row clicked!');
-        },
+        }
 
         handleNewFormSubmit(e) {
             e.preventDefault();
@@ -111,7 +107,7 @@
             }).catch((errorData) => {
                 this._mapErrorsToForm(errorData.errors);
             });
-        },
+        }
 
         _saveRepLog(data) {
             return new Promise((resolve, reject) => {
@@ -133,7 +129,7 @@
                     reject(errorData);
                 });
             });
-        },
+        }
 
         _mapErrorsToForm(errorData) {
             this._removeFormErrors();
@@ -153,20 +149,20 @@
                 $wrapper.append($error);
                 $wrapper.addClass('has-error');
             });
-        },
+        }
 
         _removeFormErrors() {
             const $form = this.$wrapper.find(this._selectors.newRepForm);
             $form.find('.js-field-error').remove();
             $form.find('.form-group').removeClass('has-error');
-        },
+        }
 
         _clearForm() {
             this._removeFormErrors();
 
             const $form = this.$wrapper.find(this._selectors.newRepForm);
             $form[0].reset();
-        },
+        }
 
         _addRow(repLog) {
             const tplText = $('#js-rep-log-row-template').html();
@@ -177,15 +173,13 @@
 
             this.updateTotalWeightLifted();
         }
-    });
+    }
 
-    /**
-     * A "private" object
-     */
-    const Helper = function ($wrapper) {
-        this.$wrapper = $wrapper;
-    };
-    $.extend(Helper.prototype, {
+    class Helper {
+        constructor ($wrapper) {
+            this.$wrapper = $wrapper;
+        }
+
         calculateTotalWeight() {
             let totalWeight = 0;
             this.$wrapper.find('tbody tr').each((index, element) => {
@@ -193,7 +187,7 @@
             });
 
             return totalWeight;
-        },
+        }
         // Default value !!!
         getTotalWeightString(maxWeight = 500) {
             let weight = this.calculateTotalWeight();
@@ -202,5 +196,9 @@
             }
             return weight + ' kg'
         }
-    });
+    }
+
+    // Export the class to the global scope. Make the RepLog app Globally accessible
+    window.RepLogApp = RepLogApp;
+
 })(window, jQuery, Routing, swal);
