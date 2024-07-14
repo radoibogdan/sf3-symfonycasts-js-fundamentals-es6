@@ -167,13 +167,10 @@
 
         _addRow(repLog) {
             /*DESTRUCTURING*/
-            let {id, itemLabel, reps, madeUpKey = 'defaultKey'} = repLog;
-            console.log(id, itemLabel, reps, madeUpKey);
+            // let {id, itemLabel, reps, madeUpKey = 'defaultKey'} = repLog;
+            // console.log(id, itemLabel, reps, madeUpKey);
 
-            const tplText = $('#js-rep-log-row-template').html();
-            const tpl = _.template(tplText);
-
-            const html = tpl(repLog);
+            const html = rowTemplate(repLog);
             this.$wrapper.find('tbody').append($.parseHTML(html));
 
             this.updateTotalWeightLifted();
@@ -209,6 +206,30 @@
             return totalWeight;
         }
     }
+
+    // Template string - Used in tagged template
+    function upper(template, ...expressions) {
+        return template.reduce((accumulator, part, i) => {
+            return accumulator + (expressions[i - 1].toUpperCase ? expressions[i - 1].toUpperCase() : expressions[i - 1]) + part
+        })
+    }
+
+    // Template string
+    const rowTemplate = (repLog) => `
+        <tr data-weight="${repLog.totalWeightLifted}">
+            <td>${repLog.itemLabel}</td>
+            <td>${repLog.reps}</td>
+            <td>${repLog.totalWeightLifted}</td>
+            <td>
+                <a href="#"
+                   class="js-delete-rep-log"
+                   data-url="${repLog.links._self}"
+                >
+                    <span class="fa fa-trash"></span>
+                </a>
+            </td>
+        </tr>
+    `;
 
     // Export the class to the global scope. Make the RepLog app Globally accessible
     window.RepLogApp = RepLogApp;
