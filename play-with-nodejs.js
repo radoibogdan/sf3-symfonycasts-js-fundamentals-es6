@@ -102,6 +102,17 @@ const newPhrase = `The year is ${new Date().getFullYear()} and I love ${food}.`
 console.log(newPhrase);
 
 // Line breaks
+// See RepLogApp rowTemplate
 
-
-
+// ###################### For of loop ######################
+for (let thing of greatThings) {
+    console.log(thing);
+}
+// Using array destructuring you can actually use for of with an object
+let pets = {
+    beagle: 'Bark Twain',
+    poodle: 'Snuffles'
+}
+for (let [dogType, dogName] of Object.entries(pets)) {
+    console.log(dogType, dogName);
+}
