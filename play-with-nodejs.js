@@ -116,3 +116,64 @@ let pets = {
 for (let [dogType, dogName] of Object.entries(pets)) {
     console.log(dogType, dogName);
 }
+
+// ###################### Map / Weak map / Set ######################
+// classic
+let foods = {};
+foods.italian = 'gelato';
+foods.mexican = 'torta';
+foods.canadian = 'poutine';
+console.log(foods.italian); // gelato
+
+// Map
+let foodsMap = new Map();
+foodsMap.set('italian', 'gelato');
+foodsMap.set('mexican','torta');
+foodsMap.set('canadian', 'poutine');
+
+if (foodsMap.has('italian')) {
+    console.log(
+        foodsMap.get('italian'),
+        foodsMap.size
+    );
+}
+
+// Map with non string keys
+let southernUSStates = ['Tennessee', 'Kentucky', 'Texax'];
+foodsMap.set(southernUSStates, 'Hot Chicken');
+console.log(foodsMap.get('Tennessee'));      // undefined
+console.log(foodsMap.get(southernUSStates)); // Hot Chicken
+
+// Weak Map - keys must be objects
+let foodsWeakMap = new WeakMap();
+foodsWeakMap.set(['italian'], 'gelato');
+foodsWeakMap.set(['mexican'],'torta');
+foodsWeakMap.set(['canadian'], 'poutine');
+foodsWeakMap.set(southernUSStates, 'Hot Chicken');
+
+console.log(
+    foodsWeakMap.get(['italian']),      // undefined, it is not the same object
+    foodsWeakMap.get(southernUSStates), // Hot Chicken
+    foodsWeakMap.size                   // undefined, does not exist for WeakMap
+);
+
+// WeakMap - garbage collection
+// In WeakMap setting variable to NULL will make JS send the variable to the garbage collection
+// In Map     setting variable to NULL will prenvent variable to be sent to the garbage collections because it is a key in the set() method
+southernUSStates = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
