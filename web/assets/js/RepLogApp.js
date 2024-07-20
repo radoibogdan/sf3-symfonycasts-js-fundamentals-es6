@@ -1,10 +1,14 @@
 'use strict';
 
 (function(window, $, Routing, swal) {
+    // Make Helper private, each ReplogApp instance will have its own private Helper instance
+    let HelperInstances = new Map();
+
     class RepLogApp {
         constructor($wrapper) {
             this.$wrapper = $wrapper;
-            this.helper = new Helper(this.$wrapper);
+            // this = key, 'this' will reference this RepLogApp instance so we can have multiple RepLogApp(each with its own Helper instance).
+            HelperInstances.set(this, new Helper(this.$wrapper));
 
             this.loadRepLogs();
 
@@ -47,7 +51,7 @@
 
         updateTotalWeightLifted() {
             this.$wrapper.find('.js-total-weight').html(
-                this.helper.getTotalWeightString()
+                HelperInstances.get(this).getTotalWeightString()
             );
         }
 
@@ -178,6 +182,9 @@
         }
     }
 
+    /**
+     * A private object that we can only use from inside of this self executing function
+     */
     class Helper {
         constructor ($wrapper) {
             this.$wrapper = $wrapper;
