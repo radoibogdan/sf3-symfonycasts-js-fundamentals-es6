@@ -7,8 +7,10 @@
     class RepLogApp {
         constructor($wrapper) {
             this.$wrapper = $wrapper;
+            this.repLogs = [];
+
             // this = key, 'this' will reference this RepLogApp instance so we can have multiple RepLogApp(each with its own Helper instance).
-            HelperInstances.set(this, new Helper(this.$wrapper));
+            HelperInstances.set(this, new Helper(this.repLogs));
 
             this.loadRepLogs();
 
@@ -88,6 +90,9 @@
                 method: 'DELETE'
             }).then(() => {
                 $row.fadeOut('normal', () => {
+                    // remove repLog from this.repLogs, "key" is the index to this repLog on this.repLogs
+                    this.repLogs.splice($row.data('key'), 1);
+                    // remove from dom
                     $row.remove();
                     this.updateTotalWeightLifted();
                 });
@@ -171,14 +176,26 @@
         }
 
         _addRow(repLog) {
+            this.repLogs.push(repLog);
             /*DESTRUCTURING*/
             // let {id, itemLabel, reps, madeUpKey = 'defaultKey'} = repLog;
             // console.log(id, itemLabel, reps, madeUpKey);
 
             const html = rowTemplate(repLog);
-            this.$wrapper.find('tbody').append($.parseHTML(html));
+            const $row = $($.parseHTML(html))
+            // store the repLogs index
+            $row.data('key', this.repLogs-1);
+
+            let $title = $('<h2>cacat</h2>');
+            this.$wrapper.find('tbody').append($title);
+            let jsElement = document.createElement('h2');
+            let jsText = document.createTextNode('cacat in js');
+            jsElement.appendChild(jsText);
+            this.$wrapper.find('tbody').append(jsElement);
+            this.$wrapper.find('tbody').append($row);
 
             this.updateTotalWeightLifted();
+
         }
     }
 
@@ -186,15 +203,13 @@
      * A private object that we can only use from inside of this self executing function
      */
     class Helper {
-        constructor ($wrapper) {
-            this.$wrapper = $wrapper;
+        constructor (repLogs) {
+            this.repLogs = repLogs;
         }
 
         calculateTotalWeight() {
             /* Using static method */
-            return Helper._calculateWeight(
-                this.$wrapper.find('tbody tr')
-            );
+            return Helper._calculateWeight(this.repLogs);
         }
         // Default value !!!
         getTotalWeightString(maxWeight = 500) {
@@ -205,10 +220,10 @@
             return weight + ' kg'
         }
         /* Create static method*/
-        static _calculateWeight($elements) {
+        static _calculateWeight(repLogs) {
             let totalWeight = 0;
-            for (let element of $elements) {
-                totalWeight += $(element).data('weight');
+            for (let repLog of repLogs) {
+                totalWeight += repLog.totalWeightLifted;
             }
 
             return totalWeight;

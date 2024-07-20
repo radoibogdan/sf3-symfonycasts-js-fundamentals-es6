@@ -162,6 +162,12 @@ console.log(
 // In Map     setting variable to NULL will prenvent variable to be sent to the garbage collections because it is a key in the set() method
 southernUSStates = null;
 
+// Set / WeakSet - for unique set of items
+let countries = new Set();
+countries.add('RO');
+countries.add('FR');
+countries.add('RO');
+console.log(countries); // Set(2) { 'RO', 'FR' }
 
 
 
