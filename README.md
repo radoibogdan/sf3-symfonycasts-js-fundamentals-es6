@@ -48,5 +48,18 @@ Install jquery
 Go to base.html.twig   
 ALT + ENTER on links => Download  
 
+### YARN
+1. Create package.json file  
+```yarn init```
+2. Install babel (transforms ES6 in old js)  
+[Link to babel docs][2]  
+```yarn add babel-cli --dev```
+3. Create dist directory (web/assets/dist)
+4. Run babel  
+   ```./node_modules/.bin/babel web/assets/js/RepLogApp.js -o web/assets/dist/RepLogApp.js```
+5. Install preset (=transformation) thats allows transformation from ES6 to old js  
+   ```yarn add babel-preset-env --dev```
+6. 
 ## Links
 [1]: http://knpuniversity.com/tracks/javascript#modern-javascript
+[2]: https://babeljs.io/

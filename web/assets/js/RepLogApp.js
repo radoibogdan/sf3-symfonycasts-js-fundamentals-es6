@@ -185,13 +185,6 @@
             const $row = $($.parseHTML(html))
             // store the repLogs index
             $row.data('key', this.repLogs-1);
-
-            let $title = $('<h2>cacat</h2>');
-            this.$wrapper.find('tbody').append($title);
-            let jsElement = document.createElement('h2');
-            let jsText = document.createTextNode('cacat in js');
-            jsElement.appendChild(jsText);
-            this.$wrapper.find('tbody').append(jsElement);
             this.$wrapper.find('tbody').append($row);
 
             this.updateTotalWeightLifted();

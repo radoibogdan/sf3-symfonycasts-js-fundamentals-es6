@@ -1,0 +1,12 @@
+{
+  "name": "ES6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/radoibogdan/sf3-symfonycasts-js-fundamentals-es6.git",
+  "author": "Bogdan Radoi fake@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
